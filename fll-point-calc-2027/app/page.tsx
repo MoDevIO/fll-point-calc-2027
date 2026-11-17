@@ -172,6 +172,7 @@ export default function Home() {
   const [values, setValues] = useState<Values>({});
   const [choices, setChoices] = useState<Choices>({});
   const [tokens, setTokens] = useState(6);
+  const [darkMode, setDarkMode] = useState(false);
 
   const score = useMemo(() => {
     const missionScores = missions.map((mission) => {
@@ -191,17 +192,22 @@ export default function Home() {
   const setChoice = (id: string, value: number) => setChoices((current) => ({ ...current, [id]: value }));
 
   return (
-    <main className="page-shell">
+    <main className={`page-shell ${darkMode ? "dark-mode" : ""}`}>
       <header className="hero">
         <div>
           <p className="eyebrow">FIRST LEGO League Challenge · Saison 2026/27</p>
           <h1>BIOGLOW<span>™</span> Punkte-Rechner</h1>
           <p className="intro">Tragt eure Ergebnisse ein und behaltet eure Robot-Game-Punktzahl im Blick.</p>
         </div>
-        <div className="score-panel" aria-live="polite">
-          <span>Gesamtpunktzahl</span>
-          <strong>{score.total}</strong>
-          <small>{score.missionsTotal} Missionen · {score.precision} Präzisionspunkte</small>
+        <div className="hero-actions">
+          <button className="theme-toggle" type="button" onClick={() => setDarkMode((current) => !current)} aria-pressed={darkMode}>
+            {darkMode ? "Heller Modus" : "Dunkler Modus"}
+          </button>
+          <div className="score-panel" aria-live="polite">
+            <span>Gesamtpunktzahl</span>
+            <strong>{score.total}</strong>
+            <small>{score.missionsTotal} Missionen · {score.precision} Präzisionspunkte</small>
+          </div>
         </div>
       </header>
 
